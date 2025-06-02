@@ -1,5 +1,5 @@
 from base_analyzer import generate_json
-from ollama_test import install_ollama
+from ollama_test import start_ollama
 import os
 import sys
 import logging
@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
         categorized_files = gather_categorized_files(directory_name)
         project_data = generate_json(categorized_files)
-        install_ollama(project_data)
+        start_ollama(project_data)
     else:
         print("Invalid number of arguments. Please provide exactly one directory path.")
         sys.exit(1)

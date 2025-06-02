@@ -2,39 +2,26 @@ import ollama
 import subprocess
 import time
 
-
-def install_ollama(project_data):
-    install = input("Whould you like to install Ollama: Y/n  ")
-    if install.lower() == "y": 
-        # Define the command to run Ollama with the specified model
-        command = f"ai_model/OllamaSetup.exe"
-        try:
-            # Open a Command Prompt window and execute the command
-            print("Waiting for Ollama Setup...")
-            finish = subprocess.run(command, check=True)
-            if finish:
-                print("Starting Ollama Setup...")
-                subprocess.Popen(f'start cmd /k ollama pull qwen2.5-coder:3b', shell=True)
-                print("Finished Ollama Setup")
-                get_ai_response(project_data)
-        except Exception as e:
-            print(f"An error occurred: {e}")
-    else:
-        start_ollama(project_data)
-
-
 def start_ollama(project_data):
-    # Define the command to run Ollama with the specified model
+    """Start the Ollama server and ensure the AI model is ready."""
     try:
-        # Open a Command Prompt window and execute the command
-        print("Waiting for Ollama Setup...")
-        finish = subprocess.Popen(f'start cmd /k ollama serve', shell=True)
-        if finish:
-            print("Finished Ollama Setup")
-            get_ai_response(project_data)
-            #check_available_models()
+        print("Checking for available models...")
+        pull_model()
+        print("Starting Ollama Server...")
+        subprocess.Popen(['start', 'cmd', '/c', 'ollama serve'], shell=True)
+        print("Finished Ollama Setup.")
+        get_ai_response(project_data)
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred while starting Ollama: {e}")
+
+
+def pull_model():
+    """Pull the required Ollama model."""
+    try:
+        subprocess.run(["ollama", "pull", "qwen2.5-coder:3b"], check=True)
+        print("Successfully pulled 'qwen2.5-coder:3b'.")
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred while pulling the model: {e}")
 
 
 # Get AI response based on user input
