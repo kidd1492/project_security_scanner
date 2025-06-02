@@ -1,0 +1,41 @@
+{
+    "file_count": 6,
+    "file_types": [
+        "py",
+        "md",
+        "txt"
+    ],
+    "files": [
+        "C:\\Users\\chris\\Desktop\\project_security_scanner\\base_analyzer.py",
+        "C:\\Users\\chris\\Desktop\\project_security_scanner\\main.py",
+        "C:\\Users\\chris\\Desktop\\project_security_scanner\\ollama_test.py",
+        "C:\\Users\\chris\\Desktop\\project_security_scanner\\__init__.py",
+        "C:\\Users\\chris\\Desktop\\project_security_scanner\\README.md",
+        "C:\\Users\\chris\\Desktop\\project_security_scanner\\requirements.txt"
+    ],
+    "readme_content": "# AI-Powered Code Security Scanner\n\n## Overview\n**AI-Powered Code Security Scanner** is an advanced security-focused tool designed to **analyze, classify, and assess** software projects. It leverages **structured extraction** and a **custom Ollama AI model** to identify the **project type** (Flask, Django, Node.js, etc.), generate an **overview**, and recommend **security scans** tailored to the project's architecture.\n\nBeyond just classification, this tool **executes security scans** using tools like **Bandit, OWASP ZAP, JSLint, and others**, refining a project's security posture. The final stage involves a **comprehensive AI-driven security review**, providing **detailed recommendations** for improving the project's safety\u2014ensuring non-coders and AI-generated code users understand security flaws and how to fix them.\n\n## Features\n- \u2705 **Project type classification** (Flask, Django, Node.js, etc.)\n- \u2705 **Structured data extraction** generating insightful **JSON reports**\n- \u2705 **AI-generated project summary** for better visibility\n- \u2705 **Intelligent security scan recommendations** based on project type\n- \u2705 **Execution of security scans** using tools like Bandit, OWASP, JSLint\n- \u2705 **AI-driven security evaluation** for actionable improvements\n- \u2705 **User-friendly CLI execution** for seamless analysis\n\n## Next Steps \ud83d\ude80\n- \ud83d\udd39 Execute the **recommended security scans** and **generate an overall report**\n- \ud83d\udd39 Leverage AI to **evaluate security findings**, suggest **improvements**, and explain **why and how** fixes should be implemented\n- \ud83d\udd39 Expand **language support** and security checks for broader usability\n- \ud83d\udd39 Automate AI-driven security assessments **within CI/CD pipelines**\n\n## Installation\nClone this repository:\n```bash\ngit clone https://github.com/kidd1492/project_security_scanner.git\n```\n\nNavigate to the project directory and set up the virtual environment:\n```bash\ncd project_security_scanner\npip install -r requirements.txt\n```\n\n### Run the program:\n```bash\npython main.py  # prompts for directory path input\n```\nAnalyze files in a specific directory:\n```bash\npython main.py Path/to/ProjectDirectory  # Generates JSON report\n```\n\n## License\nThis project is licensed under the **MIT License**. See the `LICENSE` file for more details.",
+    "requirements_content": "ollama",
+    "comments": [
+        "# Define comment patterns",
+        "\"\"\" Reads full content of a given file \"\"\"",
+        "\"\"\" Collects project file metadata and full content of README & requirements.txt \"\"\"",
+        "\"\"\" Extracts comments from each file \"\"\"",
+        "# Check for matching patterns",
+        "\"\"\" Compiles all project data and writes to a JSON file \"\"\"",
+        "# Configure logging",
+        "# Check if the file's extension is in the allowed list",
+        "# Initialize the list for this file type if not already present",
+        "# Append the file path to the appropriate list",
+        "# Define the path to Ollama executable",
+        "# Define the command to run Ollama with the specified model",
+        "# Open a Command Prompt window and execute the command",
+        "# Get AI response based on user input",
+        "# AI-Powered Code Security Scanner",
+        "## Overview",
+        "## Features",
+        "## Next Steps \ud83d\ude80",
+        "## Installation",
+        "### Run the program:",
+        "## License"
+    ]
+}
