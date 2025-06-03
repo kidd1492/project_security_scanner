@@ -41,6 +41,7 @@ def project_report(categorized_files):
 
     return file_count, file_types, all_files, readme_content, requirements_content
 
+
 def extract_file_data(all_files):
     """ Extracts comments from each file """
     extracted_data = []

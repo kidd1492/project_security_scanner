@@ -1,6 +1,7 @@
 from base_analyzer import generate_json
 from ollama_test import start_ollama
-import os
+from scans import bandit
+import os, time
 import sys
 import logging
 
@@ -50,6 +51,8 @@ if __name__ == "__main__":
 
         categorized_files = gather_categorized_files(directory_name)
         project_data = generate_json(categorized_files)
+        bandit(directory_name)
+        time.sleep(30)
         start_ollama(project_data)
     else:
         print("Invalid number of arguments. Please provide exactly one directory path.")
