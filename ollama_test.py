@@ -8,7 +8,7 @@ def start_ollama(project_data):
         print("Checking for available models...")
         pull_model()
         print("Starting Ollama Server...")
-        subprocess.Popen(['start', 'cmd', '/c', 'ollama serve'], shell=True)
+        subprocess.run(['start', 'cmd', '/c', 'ollama serve'], shell=True)
         print("Finished Ollama Setup.")
         get_ai_response(project_data)
     except Exception as e:
@@ -26,18 +26,10 @@ def pull_model():
 
 # Get AI response based on user input
 def get_ai_response(project_data):
-    prompt = """from the following data write me a detailed report that first identifies what kind of project it is. then what kind of stack. then it should have a summary section that has a 2 paragraph explanati
-    on of what the project is for and what it does. and last it should include a list of recommended scans for security such as owasp or bandit or tool that goes with the project type. just a list ofthe names."""
-    json_file_path = "reports/output.json"
-    try:
-        with open(json_file_path, "r") as file:
-            bandit_data = json.load(file)
-            
-    except Exception as e:
-        print(f"Error loading JSON file: {e}")
- 
-    question = f"{prompt} {project_data} {bandit_data}"
-    print(question)
+    prompt = """Evaluate the following data to give me a responce in json format to determine: 1. project type: what type of project it is.
+                2. stack: what kind of stack is uses. 3. summary: A summary section that has a 2 paragraph explanation of what the project is for and what it does.
+                4. recomemded scans: it should include a list of recommended security scans that are avalible for the kind of project. 5.Comman Risk: give a list of 5 comman security issus for this type of project"""
+    question = f"{prompt} {project_data}"
 
     try:
         print("Waiting on response....")

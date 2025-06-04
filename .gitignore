@@ -5,3 +5,4 @@ __pycache__/
 ai_model/
 reports/overview.txt
 reports/project_data.json
+app.log

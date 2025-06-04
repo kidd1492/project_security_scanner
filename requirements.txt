@@ -1,2 +1,4 @@
 ollama
+docutils
 bandit
+docutils

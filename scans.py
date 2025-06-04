@@ -10,3 +10,5 @@ def bandit(directory):
     return 0
    
 
+#TODO function for OWASP ZAP
+
