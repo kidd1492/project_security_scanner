@@ -1,7 +1,6 @@
 from base_analyzer import generate_json
-import helper
+import helper, scans
 from ollama_test import start_ollama
-from scans import bandit
 import os, time
 import sys
 import logging
@@ -26,9 +25,10 @@ if __name__ == "__main__":
 
         total_files, file_types, file_count = helper.gather_categorized_files(directory_name)
         project_data = generate_json(total_files, file_types, file_count)
-        #bandit(directory_name)
+        scans.run_semgrep_scan(directory_name)
+        scans.bandit(directory_name)
         #time.sleep(30)
-        start_ollama(project_data)
+        #start_ollama(project_data)
     else:
         print("Invalid number of arguments. Please provide exactly one directory path.")
         sys.exit(1)

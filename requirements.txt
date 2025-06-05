@@ -2,3 +2,4 @@ ollama
 docutils
 bandit
 docutils
+semgrep
