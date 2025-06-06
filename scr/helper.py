@@ -53,7 +53,7 @@ def gather_categorized_files(directory, output_file="reports/categorized_files.j
             file_types[file_type] = len(file_list)
             file_count += len(file_list)
         # Create output directory if it doesn't exist
-        output_file="reports/categorized_files.json"
+        output_file="scr/reports/categorized_files.json"
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         
         # Write categorized files directly to JSON
@@ -93,7 +93,7 @@ def parse_semgrep_scan(file_path):
             }
             results.append(issue_info)
          # Save the results to a JSON file
-        with open("reports/semgrep_ai_data.json", 'w') as output_file:
+        with open("scr/reports/scans/semgrep_ai_data.json", 'w') as output_file:
             json.dump(results, output_file, indent=4)
         return results
 

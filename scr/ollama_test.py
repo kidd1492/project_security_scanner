@@ -35,7 +35,7 @@ def get_ai_response(project_data):
     try:
         print("Waiting on response....")
         response = ollama.chat(model="qwen2.5-coder:3b", messages=[{"role": "user", "content": question}])
-        with open("reports\\overview.txt", "w") as out:
+        with open("scr\\reports\\overview.txt", "w") as out:
             out.write(response["message"]["content"])
         print("reports saved")
         return response["message"]["content"]

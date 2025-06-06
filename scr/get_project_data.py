@@ -21,7 +21,7 @@ def project_report():
     readme_content = []
     requirements_content = []
 
-    json_file = "reports/categorized_files.json"
+    json_file = "scr/reports/categorized_files.json"
     with open(json_file, "r", encoding="utf-8") as file:
         categorized_files = json.load(file)  # Load JSON data
         for file_type, file_list in categorized_files.items():
@@ -68,7 +68,7 @@ def project_report():
      readme_content, requirements_content)
 
 
-def generate_project_json(total_files, file_types, file_count, output_file="reports/project_data.json"):
+def generate_project_json(total_files, file_types, file_count, output_file="scr/reports/project_data.json"):
     """Compiles all project data and writes to a JSON file."""
     logging.info("Generating project report...")
     

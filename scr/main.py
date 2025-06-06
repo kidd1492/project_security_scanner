@@ -27,9 +27,9 @@ if __name__ == "__main__":
         #TODO better function name!
         generate_project_json(total_files, file_types, file_count)
         scans.run_semgrep_scan(directory_name)
-        scan_data = helper.parse_semgrep_scan("reports/scans/semgrep_results.json")
+        scan_data = helper.parse_semgrep_scan("scr/reports/scans/semgrep_results.json")
         #scans.bandit(directory_name)
-        time.sleep(30)
+        time.sleep(10)
         start_ollama(scan_data)
     else:
         print("Invalid number of arguments. Please provide exactly one directory path.")

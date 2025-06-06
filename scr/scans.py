@@ -14,11 +14,11 @@ def bandit(directory):
 #TODO function for semgrep
 def run_semgrep_scan(directory):
     # Ensure the reports directory exists
-    reports_dir = os.path.join(os.getcwd(), "reports")
+    reports_dir = os.path.join(os.getcwd(), "scr/reports/scans")
     os.makedirs(reports_dir, exist_ok=True)
 
     # Define the output file path
-    output_file = os.path.join(reports_dir, "scans/semgrep_results.json")
+    output_file = os.path.join(reports_dir, "semgrep_results.json")
 
     # Run Semgrep safely
     command = [

@@ -45,26 +45,29 @@ This tool systematically:
 
 
 ## Installation
+Install Ollama from https://ollama.com/
+
 Clone this repository:
 ```bash
 git clone https://github.com/kidd1492/project_security_scanner.git
 ```
-
-Navigate to the project directory and set up the virtual environment:
 ```bash
 cd project_security_scanner
-pip install -r requirements.txt
+```
+
+Set up the virtual environment:
+```bash
+python -m venv venv
 ```
 ```bash
-cd scr
-```
-Must install Ollama before running!  
-```
+pip install -r requirements.txt
+``` 
+
 ### Run the program:
 
 Analyze files in a specific directory:
 ```bash
-python main.py Path/to/ProjectDirectory 
+python scr/main.py Path/to/ProjectDirectory 
 ```
 
 ## License
