@@ -8,3 +8,5 @@ reports/categorized_files.json
 reports/project_data.json
 reports/semgrep_results.json
 app.log
+overview.txt
+semgrep_ai_data.json

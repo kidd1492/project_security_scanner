@@ -24,11 +24,13 @@ if __name__ == "__main__":
             sys.exit(1)
 
         total_files, file_types, file_count = helper.gather_categorized_files(directory_name)
-        project_data = generate_json(total_files, file_types, file_count)
+        #TODO better function name!
+        generate_json(total_files, file_types, file_count)
         scans.run_semgrep_scan(directory_name)
-        scans.bandit(directory_name)
-        #time.sleep(30)
-        #start_ollama(project_data)
+        scan_data = helper.parse_semgrep_scan("reports/semgrep_results.json")
+        #scans.bandit(directory_name)
+        time.sleep(30)
+        start_ollama(scan_data)
     else:
         print("Invalid number of arguments. Please provide exactly one directory path.")
         sys.exit(1)

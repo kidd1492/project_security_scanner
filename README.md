@@ -1,24 +1,49 @@
 # AI-Powered Code Security Scanner
 
-## Overview
-**AI-Powered Code Security Scanner** is an advanced security-focused tool designed to **analyze, classify, and assess** software projects. It leverages **structured extraction** and a **custom Ollama AI model** to identify the **project type** (Flask, Django, Node.js, etc.), generate an **overview**, and recommend **security scans** tailored to the project's architecture.
+## **Overview**
+The **AI-Powered Security Assessment Tool** is an automated security scanning and evaluation system designed to **analyze, classify, and assess** software projects. It leverages **structured data extraction**, **automated security scans**, and **AI-driven analysis** to provide a **comprehensive security overview**.
 
-Beyond just classification, this tool **executes security scans** using tools like **Bandit, OWASP ZAP, JSLint, and others**, refining a project's security posture. The final stage involves a **comprehensive AI-driven security review**, providing **detailed recommendations** for improving the project's safety—ensuring non-coders and AI-generated code users understand security flaws and how to fix them.
+This tool systematically:
+1. **Collects project files** using `os.walk()`, categorizing file types and generating structured JSON reports.
+2. **Executes security scans** (Semgrep, Bandit, Trivy, Checkov, etc.), parsing results for AI evaluation.
+3. **Uses AI to analyze findings**, grouping related security issues, explaining risks, and suggesting fixes.
+4. **Tracks security posture over time**, comparing past and current assessments to measure improvements.
 
-## Features
-- ✅ **Project type classification** (Flask, Django, Node.js, etc.)
-- ✅ **Structured data extraction** generating insightful **JSON reports**
-- ✅ **AI-generated project summary** for better visibility
-- ✅ **Intelligent security scan recommendations** based on project type
-- ✅ **Execution of security scans** using tools like Bandit, OWASP, JSLint
-- ✅ **AI-driven security evaluation** for actionable improvements
-- ✅ **User-friendly CLI execution** for seamless analysis
+## **Features**
+✅ **Automated file discovery** (`os.walk()`) with structured JSON output  
+✅ **Project structure analysis** (`README.md`, `settings.py`, `views.py`, database presence)  
+✅ **Execution of multiple security scans** (Semgrep, Bandit, Trivy, Checkov, OWASP ZAP, JSLint)  
+✅ **AI-driven security evaluation**, grouping issues and providing actionable fixes  
+✅ **False positive likelihood estimation** for better accuracy  
+✅ **Automated document size management**, ensuring AI can process large reports efficiently  
+✅ **Security posture tracking**, comparing past and current assessments  
+✅ **User-friendly CLI execution** for seamless analysis  
 
-## Next Steps 🚀
-- 🔹 Execute the **recommended security scans** and **generate an overall report**
-- 🔹 Leverage AI to **evaluate security findings**, suggest **improvements**, and explain **why and how** fixes should be implemented
-- 🔹 Expand **language support** and security checks for broader usability
-- 🔹 Automate AI-driven security assessments **within CI/CD pipelines**
+## **Workflow**
+1. **File Collection & JSON Generation**  
+   - Uses `os.walk()` to gather project files, categorize file types, and generate JSON reports.  
+
+2. **Project Structure Analysis**  
+   - Identifies key files (`README.md`, `settings.py`, `views.py`, database presence) to understand project architecture.  
+
+3. **Security Scanning & AI Evaluation**  
+   - Runs multiple security scans (Semgrep, Bandit, Trivy, Checkov, OWASP ZAP, JSLint).  
+   - AI **groups related issues**, explains risks, suggests fixes, and estimates false positive likelihood.  
+
+4. **Report Compilation & Summary Generation**  
+   - Aggregates AI feedback with structured reports to create a **final security assessment**.  
+   - Splits large documents if needed for AI processing.  
+
+5. **Security Posture Tracking**  
+   - Stores and compares past security scans against new ones to measure improvements.  
+
+## **Next Steps 🚀**
+🔹 Expand **static analysis coverage** with additional security scans  
+🔹 Automate **AI-driven security assessments** within CI/CD pipelines  
+🔹 Improve **report parsing** for better AI processing  
+🔹 Enhance **security posture tracking** for long-term monitoring  
+
+
 
 ## Installation
 Clone this repository:
@@ -31,14 +56,14 @@ Navigate to the project directory and set up the virtual environment:
 cd project_security_scanner
 pip install -r requirements.txt
 ```
-
-### Run the program:
-```bash
-python main.py  # prompts for directory path input
 ```
+Must install Ollama before running!  
+```
+### Run the program:
+
 Analyze files in a specific directory:
 ```bash
-python main.py Path/to/ProjectDirectory  # Generates JSON report
+python main.py Path/to/ProjectDirectory 
 ```
 
 ## License

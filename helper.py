@@ -66,3 +66,40 @@ def gather_categorized_files(directory, output_file="reports/categorized_files.j
         logging.error(f"An error occurred while gathering files: {e}")
 
     return total_files, file_types, file_count  # Return the path of the saved JSON file
+
+
+'''function to parse json semgrep scan to make it easier for ai to process'''
+def parse_semgrep_scan(file_path):
+    try:
+        # Load the JSON data from the file
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+
+        # Extract information from each result
+        results = []
+        for result in data.get('results', []):
+            check_id = result['check_id']
+            path = result['path']
+            metadata = result.get('extra', {}).get('metadata', {})
+            owasp = metadata.get('owasp')
+            message = result.get('extra', {}).get('message')
+
+            # Create a dictionary with the extracted information
+            issue_info = {
+                'check_id': check_id,
+                'path': path,
+                'owasp': owasp,
+                'message': message
+            }
+            results.append(issue_info)
+         # Save the results to a JSON file
+        with open("reports/semgrep_ai_data.json", 'w') as output_file:
+            json.dump(results, output_file, indent=4)
+        return results
+
+    except FileNotFoundError:
+        logging.error(f"Error: File {file_path} not found.")
+        return []
+    except json.JSONDecodeError:
+        logging.error("Error: The file is not a valid JSON file.")
+        return []

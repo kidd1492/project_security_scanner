@@ -8,6 +8,7 @@ def start_ollama(project_data):
         print("Checking for available models...")
         pull_model()
         print("Starting Ollama Server...")
+        #TODO fix shell True
         subprocess.run(['start', 'cmd', '/c', 'ollama serve'], shell=True)
         print("Finished Ollama Setup.")
         get_ai_response(project_data)
@@ -26,9 +27,9 @@ def pull_model():
 
 # Get AI response based on user input
 def get_ai_response(project_data):
-    prompt = """Evaluate the following data to give me a responce in json format to determine: 1. project type: what type of project it is.
-                2. stack: what kind of stack is uses. 3. summary: A summary section that has a 2 paragraph explanation of what the project is for and what it does.
-                4. recomemded scans: it should include a list of recommended security scans that are avalible for the kind of project. 5.Comman Risk: give a list of 5 comman security issus for this type of project"""
+    prompt = """Evaluate the following semgrep_data. if the issue occurs more than 1 time group all of them together with a list of 
+    files with that issue. for each type of issue give me the "file_name": file name or list, "issue": explain why it is an issue. 
+    "fix": give a detailed fix for the issue. after evaluating the issues give a "final_summary": give a summary of your evaluation. semgrep_data:"""
     question = f"{prompt} {project_data}"
 
     try:
