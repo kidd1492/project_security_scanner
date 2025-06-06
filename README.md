@@ -44,7 +44,6 @@ This tool systematically:
 🔹 Enhance **security posture tracking** for long-term monitoring  
 
 
-
 ## Installation
 Clone this repository:
 ```bash
@@ -56,6 +55,8 @@ Navigate to the project directory and set up the virtual environment:
 cd project_security_scanner
 pip install -r requirements.txt
 ```
+```bash
+cd scr
 ```
 Must install Ollama before running!  
 ```

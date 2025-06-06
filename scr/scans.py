@@ -18,7 +18,7 @@ def run_semgrep_scan(directory):
     os.makedirs(reports_dir, exist_ok=True)
 
     # Define the output file path
-    output_file = os.path.join(reports_dir, "semgrep_results.json")
+    output_file = os.path.join(reports_dir, "scans/semgrep_results.json")
 
     # Run Semgrep safely
     command = [
