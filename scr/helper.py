@@ -2,6 +2,7 @@ import logging
 from docutils.core import publish_doctree
 import os
 import json
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -27,6 +28,24 @@ def get_rst_text(file):
     # Extract only relevant text
     text_list = [node.astext() for node in doctree.traverse() if node.tagname == "paragraph"]
     return text_list 
+
+
+#function to clear the terminal screen for menus
+def clear_screen():
+    if os.name == 'nt':  # For Windows
+        os.system('cls')
+    else:  
+        os.system('clear')
+
+
+def get_directory():
+
+    directory = input("Enter Project Directory Path: ")
+    directory_name = os.path.normpath(directory)
+    if not os.path.exists(directory_name):
+        logging.error(f"The specified directory does not exist: {directory_name}")
+    else:
+        return directory_name
 
 
 def gather_categorized_files(directory, output_file="reports/categorized_files.json"):

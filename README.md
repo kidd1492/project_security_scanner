@@ -67,7 +67,7 @@ pip install -r requirements.txt
 
 Analyze files in a specific directory:
 ```bash
-python scr/main.py Path/to/ProjectDirectory 
+python scr/main.py
 ```
 
 ## License

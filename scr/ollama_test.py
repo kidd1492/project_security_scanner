@@ -2,7 +2,7 @@ import ollama
 import subprocess, json
 import time
 
-def start_ollama(project_data):
+def start_ollama():
     """Start the Ollama server and ensure the AI model is ready."""
     try:
         print("Checking for available models...")
@@ -11,7 +11,6 @@ def start_ollama(project_data):
         #TODO fix shell True
         subprocess.run(['start', 'cmd', '/c', 'ollama serve'], shell=True)
         print("Finished Ollama Setup.")
-        get_ai_response(project_data)
     except Exception as e:
         print(f"An error occurred while starting Ollama: {e}")
 
@@ -26,7 +25,7 @@ def pull_model():
 
 
 # Get AI response based on user input
-def get_ai_response(project_data):
+def security_scan_response(project_data):
     prompt = """Evaluate the following semgrep_data. if the issue occurs more than 1 time group all of them together with a list of 
     files with that issue. for each type of issue give me the "file_name": file name or list, "issue": explain why it is an issue. 
     "fix": give a detailed fix for the issue. after evaluating the issues give a "final_summary": give a summary of your evaluation. semgrep_data:"""
