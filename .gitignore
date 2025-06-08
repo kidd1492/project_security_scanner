@@ -10,3 +10,4 @@ scr/reports/scans/semgrep_results.json
 app.log
 overview.txt
 semgrep_ai_data.json
+scr/test.py

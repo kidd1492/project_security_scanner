@@ -2,13 +2,38 @@ from get_project_data import generate_project_json
 import helper, scans
 import ollama_test
 import os, time
-import sys
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+
+'''TODO make a dictionary of menu_opption: []
+menu_opptions = {
+scans = ["1. Security_scan", "2. Overview Report"]
+}'''
 
 def menu_title():
     print("#" *42)
-    print("Welcome to the Project Scanning Tool Menu")
+    print("Welcome to the Project Scanning Tool")
     print("#" *42, "\n\n")
 
+    '''TODO change this to start() and :
+    directory_name = helper.get_directory()
+    make log to check. check log
+    if directory_name in log:
+         create_menu(update)
+    else:
+        log.info(directory_name)
+        helper.clear_screen()
+        make_menu(scans)
+           '''
+
+
+'''TODO make a function to generate the menus
+def show_menu():
+    print("#" *42)
+    print(title)
+    print("#" *42, "\n\n")''' 
 
 def start():
     menu_title()
@@ -43,4 +68,5 @@ def scan_menu():
         project_data = generate_project_json(total_files, file_types, file_count)
         time.sleep(10)
         ollama_test.start_ollama()
+        ollama_test.overview_scan_response(project_data)
 
