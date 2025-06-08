@@ -4,55 +4,58 @@ import ollama_test
 import os, time
 import logging
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
-'''TODO make a dictionary of menu_opption: []
 menu_opptions = {
-scans = ["1. Security_scan", "2. Overview Report"]
-}'''
+"update": ["1. Scans", "2. reports"],
+"scans": ["1. Security_scan", "2. Overview Report"],
+"reports": ["1. Security Report", "2. Overview Report"]
+}
 
-def menu_title():
+directory_name = ""
+
+
+def start():
+    global directory_name
     print("#" *42)
     print("Welcome to the Project Scanning Tool")
     print("#" *42, "\n\n")
 
-    '''TODO change this to start() and :
     directory_name = helper.get_directory()
-    make log to check. check log
-    if directory_name in log:
-         create_menu(update)
+   
+    # log to check. check log
+    if directory_name ==  "C:\\Users\\chris\\Desktop\\notes_app":
+         helper.clear_screen()
+         create_menu("scans")
     else:
-        log.info(directory_name)
+        logging.info(directory_name)
         helper.clear_screen()
-        make_menu(scans)
-           '''
+        create_menu("update")
+    
 
-
-'''TODO make a function to generate the menus
-def show_menu():
+def create_menu(title):
     print("#" *42)
     print(title)
-    print("#" *42, "\n\n")''' 
+    print("#" *42, "\n\n")
 
-def start():
-    menu_title()
-    first = input("Welcome, Is this a New Project (Y/n):")
-    if first.lower() == "y":
-        helper.clear_screen()
-        scan_menu()    
+    menu = menu_opptions.get(title)
+    if menu:
+        for opption in menu:
+            print(opption)
     else:
-        print("no")
+        logging.error(f"No menu names {title}")
+
+    print("\n")
+    menu_selection = input("Enter Number for Opption: ")
+    
+    if title.lower() == "scans":
+        scan(menu_selection)
+    else:print(title)
+    
 
 
-def scan_menu():
-    scan_opptions = ["1. Security_scan", "2. Overview Report"]
-    menu_title()
-    for opption in scan_opptions:
-        print(opption)
-    scan = input(f"\nPlease, Select Number opption: ")
-    if scan == "1":
-        directory_name = helper.get_directory()
+def scan(opption):
+    global directory_name
+    if opption == "1":
         total_files, file_types, file_count = helper.gather_categorized_files(directory_name)
         generate_project_json(total_files, file_types, file_count)
         scans.run_semgrep_scan(directory_name)
@@ -62,11 +65,12 @@ def scan_menu():
         ollama_test.start_ollama()
         ollama_test.security_scan_response(scan_data)
 
-    elif scan == "2":
-        directory_name = helper.get_directory()
+    elif opption == "2":
         total_files, file_types, file_count = helper.gather_categorized_files(directory_name)
         project_data = generate_project_json(total_files, file_types, file_count)
         time.sleep(10)
         ollama_test.start_ollama()
         ollama_test.overview_scan_response(project_data)
 
+if __name__ == "__main__":
+    start()

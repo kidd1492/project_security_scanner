@@ -3,11 +3,6 @@ venv/
 __pycache__/
 *.pyc
 ai_model/
-scr/reports/bandit_scan.json
-scr/reports/categorized_files.json
-scr/reports/project_data.json
-scr/reports/scans/semgrep_results.json
-app.log
-overview.txt
-semgrep_ai_data.json
+scr/reports
 scr/test.py
+app.log

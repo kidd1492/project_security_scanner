@@ -3,8 +3,6 @@ from docutils.core import publish_doctree
 import os
 import json
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 def read_file_content(file_path):
     """Reads full content of a given file with error handling."""

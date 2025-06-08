@@ -1,6 +1,9 @@
 import ollama
 import subprocess
 import test
+import logging
+from helper import clear_screen
+
 
 
 def start_ollama():
@@ -13,7 +16,11 @@ def start_ollama():
         subprocess.run(['start', 'cmd', '/c', 'ollama serve'], shell=True)
         print("Finished Ollama Setup.")
     except Exception as e:
-        print(f"An error occurred while starting Ollama: {e}")
+        logging.error(f"An error occurred while starting Ollama: {e}")
+
+'''TODO make a function to shutdown ollama after giving responce.
+def stop_ollama():
+    ...'''
 
 
 def pull_model():
@@ -22,7 +29,7 @@ def pull_model():
         subprocess.run(["ollama", "pull", "qwen2.5-coder:3b"], check=True)
         print("Successfully pulled 'qwen2.5-coder:3b'.")
     except subprocess.CalledProcessError as e:
-        print(f"An error occurred while pulling the model: {e}")
+        logging.error(f"An error occurred while pulling the model: {e}")
 
 
 # Get AI response based on user input
@@ -38,9 +45,10 @@ def security_scan_response(project_data):
         with open("scr\\reports\\security_summary.txt", "w") as out:
             out.write(response["message"]["content"])
         print("reports saved")
+        clear_screen()
         test.create_menu("reports")
     except Exception as e:
-        print(f"An error occurred while getting the AI response: {e}")
+        logging.error(f"An error occurred while getting the AI response: {e}")
         return ""
     
 
@@ -57,7 +65,8 @@ def overview_scan_response(project_data):
         with open("scr\\reports\\overview.txt", "w") as out:
             out.write(response["message"]["content"])
         print("reports saved")
+        clear_screen()
         test.create_menu("reports")
     except Exception as e:
-        print(f"An error occurred while getting the AI response: {e}")
+        logging.error(f"An error occurred while getting the AI response: {e}")
         return ""
