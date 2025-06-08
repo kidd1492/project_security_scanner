@@ -35,6 +35,8 @@ def clear_screen():
     else:  
         os.system('clear')
 
+
+#function to check logs to see if a directory had been scanned before.
 def check_log(directory):
     with open("scr/app.log", "r", encoding="utf-8") as report:
         for line in report:
@@ -44,7 +46,7 @@ def check_log(directory):
 
 
 def get_directory():
-
+    #TODO add a while loop until valid directory
     directory = input("Enter Project Directory Path: ")
     directory_name = os.path.normpath(directory)
     if not os.path.exists(directory_name):

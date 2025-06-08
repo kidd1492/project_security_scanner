@@ -18,6 +18,7 @@ def start_ollama():
     except Exception as e:
         logging.error(f"An error occurred while starting Ollama: {e}")
 
+
 '''TODO make a function to shutdown ollama after giving responce.
 def stop_ollama():
     ...'''
