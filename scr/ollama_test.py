@@ -3,7 +3,7 @@ import subprocess
 import test
 import logging
 from helper import clear_screen
-
+import main_menu
 
 
 def start_ollama():
@@ -46,7 +46,7 @@ def security_scan_response(project_data):
             out.write(response["message"]["content"])
         print("reports saved")
         clear_screen()
-        test.create_menu("reports")
+        main_menu.create_menu("reports")
     except Exception as e:
         logging.error(f"An error occurred while getting the AI response: {e}")
         return ""
@@ -66,7 +66,7 @@ def overview_scan_response(project_data):
             out.write(response["message"]["content"])
         print("reports saved")
         clear_screen()
-        test.create_menu("reports")
+        main_menu.create_menu("reports")
     except Exception as e:
         logging.error(f"An error occurred while getting the AI response: {e}")
         return ""

@@ -35,6 +35,13 @@ def clear_screen():
     else:  
         os.system('clear')
 
+def check_log(directory):
+    with open("scr/app.log", "r", encoding="utf-8") as report:
+        for line in report:
+            if directory in line:
+                return True
+    return False  # Only return False after checking all lines
+
 
 def get_directory():
 
