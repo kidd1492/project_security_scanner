@@ -1,10 +1,10 @@
 import os
 import json
-import logging
 import helper
+from log_handler import app_logger, project_logger
 
 
-def project_report():
+def project_report(read_file):
     """Collects project file metadata and extracts filenames instead of full paths."""
 
     # Flags for project classification
@@ -17,7 +17,7 @@ def project_report():
     readme_content = []
     requirements_content = []
 
-    json_file = "scr/reports/categorized_files.json"
+    json_file = read_file
     with open(json_file, "r", encoding="utf-8") as file:
         categorized_files = json.load(file)  # Load JSON data
         for file_type, file_list in categorized_files.items():
@@ -64,13 +64,12 @@ def project_report():
      readme_content, requirements_content)
 
 
-def generate_project_json(total_files, file_types, file_count, output_file="scr/reports/project_data.json"):
+def generate_project_json(total_files, file_types, file_count, output_file, read_file):
     """Compiles all project data and writes to a JSON file."""
-    logging.info("Generating project report...")
     
     (models_py, views_py, urls_py, 
      docker_used, docker_compose_used, database_type, 
-     readme_content, requirements_content) = project_report()
+     readme_content, requirements_content) = project_report(read_file)
 
     project_data = {
         "total_files": total_files,
@@ -90,8 +89,8 @@ def generate_project_json(total_files, file_types, file_count, output_file="scr/
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         with open(output_file, "w", encoding="utf-8") as json_file:
             json.dump(project_data, json_file, indent=4)
-        logging.info(f"Project data successfully written to {output_file}")
+        project_logger.info(f"Project data successfully written to {output_file}")
     except Exception as e:
-        logging.error(f"Error writing project data to {output_file}: {e}")
+        app_logger.error(f"Error writing project data to {output_file}: {e}")
 
     return project_data

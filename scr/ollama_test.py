@@ -1,6 +1,5 @@
 import ollama
 import subprocess
-import test
 import logging
 from helper import clear_screen
 import main_menu

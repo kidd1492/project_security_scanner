@@ -1,9 +1,7 @@
-from main_menu import start
-import logging
-
-# Configure logging
-logging.basicConfig(level=logging.INFO, filename='scr/app.log', format='%(asctime)s - %(levelname)s - %(message)s')
+from main_menu import start_program
+import os
 
     
 if __name__ == "__main__":
-    start()
+    os.makedirs("scr/projects", exist_ok=True)
+    start_program()

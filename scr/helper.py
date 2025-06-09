@@ -1,4 +1,5 @@
 import logging
+from log_handler import app_logger, project_logger
 from docutils.core import publish_doctree
 import os
 import json
@@ -36,26 +37,7 @@ def clear_screen():
         os.system('clear')
 
 
-#function to check logs to see if a directory had been scanned before.
-def check_log(directory):
-    with open("scr/app.log", "r", encoding="utf-8") as report:
-        for line in report:
-            if directory in line:
-                return True
-    return False  # Only return False after checking all lines
-
-
-def get_directory():
-    #TODO add a while loop until valid directory
-    directory = input("Enter Project Directory Path: ")
-    directory_name = os.path.normpath(directory)
-    if not os.path.exists(directory_name):
-        logging.error(f"The specified directory does not exist: {directory_name}")
-    else:
-        return directory_name
-
-
-def gather_categorized_files(directory, output_file="reports/categorized_files.json"):
+def gather_categorized_files(directory, output_file):
     allowed_extensions = [".py", ".html", ".js", ".md", ".txt", ".db", ".css", ".rst", ".yml"]  # Add more as needed
     ignored_directories = [".git", "env", "venv"]
     categorized_files = {}
@@ -79,17 +61,17 @@ def gather_categorized_files(directory, output_file="reports/categorized_files.j
             file_types[file_type] = len(file_list)
             file_count += len(file_list)
         # Create output directory if it doesn't exist
-        output_file="scr/reports/categorized_files.json"
+        
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         
         # Write categorized files directly to JSON
         with open(output_file, "w", encoding="utf-8") as json_file:
             json.dump(categorized_files, json_file, indent=4)
 
-        logging.info(f"Categorized files successfully written to {output_file}")
+        project_logger.info(f"Categorized files successfully written to {output_file}")
     
     except Exception as e:
-        logging.error(f"An error occurred while gathering files: {e}")
+        app_logger.error(f"An error occurred while gathering files: {e}")
 
     return total_files, file_types, file_count  # Return the path of the saved JSON file
 

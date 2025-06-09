@@ -1,8 +1,9 @@
 from get_project_data import generate_project_json
-import helper, scans
+from log_handler import app_logger, project_logger
+import helper, scans, new_project
 import ollama_test
 import sys, time
-import logging
+
 
 
 menu_opptions = {
@@ -14,25 +15,19 @@ menu_opptions = {
 directory_name = ""
 
 
-def start():
+def start_program():
     global directory_name
     helper.clear_screen()
     print("#" *42)
     print("Welcome to the Project Scanning Tool")
     print("#" *42, "\n\n")
 
-    directory_name = helper.get_directory()
-   
-    '''TODO check log to see if file has been scanned '''
-    exist = helper.check_log(directory_name)
+    directory_name = new_project.get_directory()
+    exist = new_project.check_log(directory_name)
     if exist ==  True:
          helper.clear_screen()
          create_menu("update")
-    else:
-        logging.info(directory_name)
-        helper.clear_screen()
-        create_menu("scans")
-    
+
 
 def create_menu(title):
     print("#" *42)
@@ -44,7 +39,7 @@ def create_menu(title):
         for opption in menu:
             print(opption)
     else:
-        logging.error(f"No menu names {title}")
+        app_logger.error(f"No menu names {title}")
 
     print("\n")
     menu_selection = input("Enter Number for Opption: ")
@@ -95,7 +90,6 @@ def scan(opption):
         ollama_test.overview_scan_response(project_data)
 
 
-
 def reports(opption):
     if opption == "1":
         security_print = helper.read_file_content("scr\\reports\\security_summary.txt")
@@ -111,7 +105,3 @@ def reports(opption):
         if close == "":
             helper.clear_screen()
             create_menu("reports")
-
-
-if __name__ == "__main__":
-    start()
