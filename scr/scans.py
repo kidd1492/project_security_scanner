@@ -12,9 +12,8 @@ def bandit(directory):
    
 
 #TODO function for semgrep
-def run_semgrep_scan(directory):
-    # Ensure the reports directory exists
-    reports_dir = os.path.join(os.getcwd(), "scr/reports/scans")
+def run_semgrep_scan(directory, reports_dir):
+    # Ensure the reports directory exist
     os.makedirs(reports_dir, exist_ok=True)
 
     # Define the output file path

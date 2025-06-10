@@ -1,6 +1,6 @@
 import ollama
-import subprocess
-import logging
+import subprocess, os
+from log_handler import app_logger, project_logger
 from helper import clear_screen
 import main_menu
 
@@ -15,7 +15,7 @@ def start_ollama():
         subprocess.run(['start', 'cmd', '/c', 'ollama serve'], shell=True)
         print("Finished Ollama Setup.")
     except Exception as e:
-        logging.error(f"An error occurred while starting Ollama: {e}")
+        app_logger.error(f"An error occurred while starting Ollama: {e}")
 
 
 '''TODO make a function to shutdown ollama after giving responce.
@@ -29,11 +29,13 @@ def pull_model():
         subprocess.run(["ollama", "pull", "qwen2.5-coder:3b"], check=True)
         print("Successfully pulled 'qwen2.5-coder:3b'.")
     except subprocess.CalledProcessError as e:
-        logging.error(f"An error occurred while pulling the model: {e}")
+        app_logger.error(f"An error occurred while pulling the model: {e}")
 
 
 # Get AI response based on user input
-def security_scan_response(project_data):
+def security_scan_response(project_data, output):
+    output_file = os.path.join(output, "security_summary.txt")
+
     prompt = """Evaluate the following semgrep_data. if the issue occurs more than 1 time group all of them together with a list of 
     files with that issue. for each type of issue give me the "file_name": file name or list, "issue": explain why it is an issue. 
     "fix": give a detailed fix for the issue. after evaluating the issues give a "final_summary": give a summary of your evaluation. semgrep_data:"""
@@ -42,17 +44,18 @@ def security_scan_response(project_data):
     try:
         print("Waiting on response....")
         response = ollama.chat(model="qwen2.5-coder:3b", messages=[{"role": "user", "content": question}])
-        with open("scr\\reports\\security_summary.txt", "w") as out:
+        with open(output_file, "w") as out:
             out.write(response["message"]["content"])
         print("reports saved")
         clear_screen()
         main_menu.create_menu("reports")
     except Exception as e:
-        logging.error(f"An error occurred while getting the AI response: {e}")
+        app_logger.error(f"An error occurred while getting the AI response: {e}")
         return ""
     
 
-def overview_scan_response(project_data):
+def overview_scan_response(project_data, output):
+    output_file = os.path.join(output, "overview.txt")
     prompt = """Evaluate the following project_data. Based on the data create a project summary report with-
      "summary": a 2 parahraph summary Detailing the project. "stack" Give a summary the stack used and what dependiancies there are.
     "other_info": any other relevant information you think would be helpfull for an overview. -if there is not enough information
@@ -62,11 +65,11 @@ def overview_scan_response(project_data):
     try:
         print("Waiting on response....")
         response = ollama.chat(model="qwen2.5-coder:3b", messages=[{"role": "user", "content": question}])
-        with open("scr\\reports\\overview.txt", "w") as out:
+        with open(output_file, "w") as out:
             out.write(response["message"]["content"])
         print("reports saved")
         clear_screen()
         main_menu.create_menu("reports")
     except Exception as e:
-        logging.error(f"An error occurred while getting the AI response: {e}")
+        app_logger.error(f"An error occurred while getting the AI response: {e}")
         return ""

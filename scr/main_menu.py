@@ -2,7 +2,7 @@ from get_project_data import generate_project_json
 from log_handler import app_logger, project_logger
 import helper, scans, new_project
 import ollama_test
-import sys, time
+import sys, time, os
 
 
 
@@ -72,34 +72,40 @@ def create_menu(title):
 def scan(opption):
     global directory_name
 
+    project_name = f"project_{directory_name.split("\\" or "/")[-1]}"
+    reports_output = os.path.join("scr", "projects", f"{project_name}", "reports")
+    scans_output = os.path.join("scr", "projects", f"{project_name}", "scans")
+
     if opption == "1":
-        total_files, file_types, file_count = helper.gather_categorized_files(directory_name)
-        generate_project_json(total_files, file_types, file_count)
-        scans.run_semgrep_scan(directory_name)
-        scan_data = helper.parse_semgrep_scan("scr/reports/scans/semgrep_results.json")
+        scans.run_semgrep_scan(directory_name, scans_output)
+        scan_data = helper.parse_semgrep_scan(f"scr/projects/{project_name}/scans/semgrep_results.json", scans_output)
         #scans.bandit(directory_name)
         time.sleep(10)
         ollama_test.start_ollama()
-        ollama_test.security_scan_response(scan_data)
+        ollama_test.security_scan_response(scan_data, reports_output)
 
     elif opption == "2":
-        total_files, file_types, file_count = helper.gather_categorized_files(directory_name)
-        project_data = generate_project_json(total_files, file_types, file_count)
+        project_data_path = os.path.join("scr", "projects", f"{project_name}", "scans", "project_data.json")
+        project_data = helper.read_file_content(project_data_path)
         time.sleep(10)
         ollama_test.start_ollama()
-        ollama_test.overview_scan_response(project_data)
+        ollama_test.overview_scan_response(project_data, reports_output)
 
 
 def reports(opption):
+    project_name = f"project_{directory_name.split("\\" or "/")[-1]}"
+    
     if opption == "1":
-        security_print = helper.read_file_content("scr\\reports\\security_summary.txt")
+        security_report = os.path.join("scr", "projects", f"{project_name}", "reports", "security_summary.txt")
+        security_print = helper.read_file_content(security_report)
         print(security_print)
         close = input("Press Enter key to close: ")
         if close == "":
             helper.clear_screen()
             create_menu("reports")
     if opption == "2":
-        overview_print = helper.read_file_content("scr\\reports\\overview.txt")
+        overview_report = os.path.join("scr", "projects", f"{project_name}", "reports", "overview.txt")
+        overview_print = helper.read_file_content(overview_report)
         print(f"{overview_print}\n\n")
         close = input("Press Enter key to close: ")
         if close == "":

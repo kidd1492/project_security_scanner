@@ -12,7 +12,7 @@ def read_file_content(file_path):
             content = f.read().strip()
             return content
     except Exception as e:
-        logging.error(f"Error reading {file_path}: {e}")
+        app_logger.error(f"Error reading {file_path}: {e}")
         return None
     
 
@@ -77,7 +77,8 @@ def gather_categorized_files(directory, output_file):
 
 
 '''function to parse json semgrep scan to make it easier for ai to process'''
-def parse_semgrep_scan(file_path):
+def parse_semgrep_scan(file_path, reports_dir):
+    output_file = os.path.join(reports_dir, "semgrep_ai_data.json")
     try:
         # Load the JSON data from the file
         with open(file_path, 'r') as file:
@@ -101,13 +102,13 @@ def parse_semgrep_scan(file_path):
             }
             results.append(issue_info)
          # Save the results to a JSON file
-        with open("scr/reports/scans/semgrep_ai_data.json", 'w') as output_file:
-            json.dump(results, output_file, indent=4)
+        with open(output_file, 'w') as out:
+            json.dump(results, out, indent=4)
         return results
 
     except FileNotFoundError:
-        logging.error(f"Error: File {file_path} not found.")
+        app_logger.error(f"Error: File {file_path} not found.")
         return []
     except json.JSONDecodeError:
-        logging.error("Error: The file is not a valid JSON file.")
+        app_logger.error("Error: The file is not a valid JSON file.")
         return []
