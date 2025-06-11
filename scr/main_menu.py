@@ -1,4 +1,4 @@
-from get_project_data import generate_project_json
+from new_project import gather_poject_info
 from log_handler import app_logger, project_logger
 import helper, scans, new_project
 import ollama_test
@@ -8,7 +8,7 @@ import sys, time, os
 loop through and create a menu with those scans '''
 
 menu_opptions = {
-"update": ["1. Scans", "2. Reports", "3. EXIT"],
+"update": ["1. Scans", "2. Reports", "3. Update Project Data", "4. EXIT"],
 "scans": ["1. Run Security_scan", "2. Generate Overview Report", "3. MAIN MENU", "4. EXIT"],
 "reports": ["1. View Security Report", "2. View Overview Report", "3. BACK","4. EXIT"]
 }
@@ -46,6 +46,9 @@ def create_menu(title):
     menu_selection = input("Enter Number for Opption: ")
     if menu_selection in menu[-1]:
         sys.exit()
+
+    '''TODO make own py file for each scans, reports, updats. import those files start functions.
+    send directory_name and the option'''
     if title == "reports":
         if menu_selection in menu[-2]:
             helper.clear_screen()
@@ -57,9 +60,11 @@ def create_menu(title):
         if menu_selection == "1":
             helper.clear_screen()
             create_menu("scans")
-        else:
+        elif menu_selection == "2":
             helper.clear_screen()
             create_menu("reports")
+        elif menu_selection == "3":
+            update_project_data()
     
     if title.lower() == "scans":
         if menu_selection in menu[-2]:
@@ -70,6 +75,14 @@ def create_menu(title):
             scan(menu_selection)
     
 
+def update_project_data():
+    global directory_name
+    project_id = directory_name.split("\\" or "/")[-1]
+    project_path = os.path.join("scr", "projects", f"project_{project_id}")
+    gather_poject_info(directory_name, project_path)
+    helper.clear_screen()
+    
+
 def scan(opption):
     global directory_name
 
@@ -78,8 +91,7 @@ def scan(opption):
     scans_output = os.path.join("scr", "projects", f"{project_name}", "scans")
 
     if opption == "1":
-        scans.run_semgrep_scan(directory_name, scans_output)
-        scan_data = helper.parse_semgrep_scan(f"scr/projects/{project_name}/scans/semgrep_results.json", scans_output)
+        scan_data = helper.read_file_content(f"scr/projects/{project_name}/scans/semgrep_ai_data.json")
         #scans.bandit(directory_name)
         time.sleep(10)
         ollama_test.start_ollama()
