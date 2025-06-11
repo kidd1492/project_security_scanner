@@ -104,6 +104,7 @@ def parse_semgrep_scan(file_path, reports_dir):
          # Save the results to a JSON file
         with open(output_file, 'w') as out:
             json.dump(results, out, indent=4)
+        project_logger.info(f"semgrep_ai_ data successfully written to {output_file}")
         return results
 
     except FileNotFoundError:

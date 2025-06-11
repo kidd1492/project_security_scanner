@@ -9,6 +9,8 @@ def start_ollama():
     """Start the Ollama server and ensure the AI model is ready."""
     try:
         print("Checking for available models...")
+
+        '''TODO check to see is model is there before pulling it every time.'''
         pull_model()
         print("Starting Ollama Server...")
         #TODO fix shell True
@@ -16,6 +18,7 @@ def start_ollama():
         print("Finished Ollama Setup.")
     except Exception as e:
         app_logger.error(f"An error occurred while starting Ollama: {e}")
+        print("Please make sure Ollama is installed: ")
 
 
 '''TODO make a function to shutdown ollama after giving responce.
@@ -73,3 +76,6 @@ def overview_scan_response(project_data, output):
     except Exception as e:
         app_logger.error(f"An error occurred while getting the AI response: {e}")
         return ""
+
+
+'''TODO make another prompt for ai to do something'''

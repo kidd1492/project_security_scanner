@@ -4,7 +4,8 @@ import helper, scans, new_project
 import ollama_test
 import sys, time, os
 
-
+'''TODO make a function to check scans and reports directory
+loop through and create a menu with those scans '''
 
 menu_opptions = {
 "update": ["1. Scans", "2. Reports", "3. EXIT"],
@@ -99,6 +100,8 @@ def reports(opption):
         security_report = os.path.join("scr", "projects", f"{project_name}", "reports", "security_summary.txt")
         security_print = helper.read_file_content(security_report)
         print(security_print)
+
+        #TODO fix this if not '' then while True:
         close = input("Press Enter key to close: ")
         if close == "":
             helper.clear_screen()

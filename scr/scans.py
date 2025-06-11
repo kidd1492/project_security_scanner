@@ -1,5 +1,7 @@
 import subprocess
 import os
+from log_handler import app_logger, project_logger
+
 
 def bandit(directory):
     print(f"Scanning: {directory}")
@@ -29,5 +31,5 @@ def run_semgrep_scan(directory, reports_dir):
     ]
 
     subprocess.run(command, check=True)
-
+    project_logger.info(f"semgrep_scan data successfully written to {output_file}")
     print(f"Scan completed! Results saved to {output_file}")
