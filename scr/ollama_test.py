@@ -5,6 +5,23 @@ from log_handler import app_logger, project_logger
 from helper import clear_screen
 import main_menu
 
+
+def start_ollama():
+    """Start the Ollama server and ensure the AI model is ready."""
+    installed = ollama_installed()
+    if installed == True:
+        try:
+            print("Checking for available models...")
+            pull_model()
+            
+            print("Starting Ollama Server...")
+            subprocess.run(['start', 'cmd', '/c', 'ollama serve'], shell=True)
+            print("Finished Ollama Setup.")
+        except Exception as e:
+            app_logger.error(f"An error occurred while starting Ollama: {e}")
+            print("Please make sure Ollama is installed.")
+
+
 def ollama_installed():
     """Check if Ollama is installed before proceeding."""
     try:
@@ -13,44 +30,19 @@ def ollama_installed():
     except subprocess.CalledProcessError:
         app_logger.error("Ollama is not installed or not found.")
         print("Ollama is not installed. Please install it before proceeding.")
-        return False
-
-
-def model_exists(model_name):
-    """Check if the specified Ollama model is already available."""
-    if not ollama_installed():
-        return False
-    
-    try:
-        result = subprocess.run(["ollama", "list"], capture_output=True, text=True, check=True)
-        return model_name in result.stdout
-    except subprocess.CalledProcessError as e:
-        app_logger.error(f"Error checking model existence: {e}")
+        print("ollama.com to intall:")
         return False
 
 
 def pull_model():
     """Pull the required Ollama model if not already available."""
     model_name = "qwen2.5-coder:3b"
+    
     try:
         subprocess.run(["ollama", "pull", model_name], check=True)
         print(f"Successfully pulled '{model_name}'.")
     except subprocess.CalledProcessError as e:
         app_logger.error(f"An error occurred while pulling the model: {e}")
-
-
-def start_ollama():
-    """Start the Ollama server and ensure the AI model is ready."""
-    try:
-        print("Checking for available models...")
-        pull_model()
-        
-        print("Starting Ollama Server...")
-        subprocess.run(['start', 'cmd', '/c', 'ollama serve'], shell=True)
-        print("Finished Ollama Setup.")
-    except Exception as e:
-        app_logger.error(f"An error occurred while starting Ollama: {e}")
-        print("Please make sure Ollama is installed.")
 
 
 def stop_ollama():
