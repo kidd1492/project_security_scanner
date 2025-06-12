@@ -1,11 +1,4 @@
 import ollama
-import subprocess, os
-from log_handler import app_logger, project_logger
-from helper import clear_screen
-import main_menu
-
-
-import ollama
 import subprocess
 import os
 from log_handler import app_logger, project_logger
@@ -39,10 +32,6 @@ def model_exists(model_name):
 def pull_model():
     """Pull the required Ollama model if not already available."""
     model_name = "qwen2.5-coder:3b"
-    if model_exists(model_name):
-        print(f"Model '{model_name}' is already available. Skipping download.")
-        return
-
     try:
         subprocess.run(["ollama", "pull", model_name], check=True)
         print(f"Successfully pulled '{model_name}'.")
@@ -91,6 +80,7 @@ def security_scan_response(project_data, output):
         with open(output_file, "w") as out:
             out.write(response["message"]["content"])
         print("reports saved")
+        stop_ollama()
         clear_screen()
         main_menu.create_menu("reports")
     except Exception as e:
@@ -112,6 +102,7 @@ def overview_scan_response(project_data, output):
         with open(output_file, "w") as out:
             out.write(response["message"]["content"])
         print("reports saved")
+        stop_ollama()
         clear_screen()
         main_menu.create_menu("reports")
     except Exception as e:

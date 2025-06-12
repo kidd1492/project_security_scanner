@@ -1,14 +1,14 @@
 from new_project import gather_poject_info
-from log_handler import app_logger, project_logger
-import helper, scans, new_project
+from log_handler import app_logger
+import helper, new_project, view_reports
 import ollama_test
-import sys, time, os
+import sys, os, time
 
 '''TODO make a function to check scans and reports directory
 loop through and create a menu with those scans '''
 
 menu_opptions = {
-"update": ["1. Scans", "2. Reports", "3. Update Project Data", "4. EXIT"],
+"update": ["1. Scans", "2. Reports", "3. Update Project Data", "4. Register New Project", "5. EXIT"],
 "scans": ["1. Run Security_scan", "2. Generate Overview Report", "3. MAIN MENU", "4. EXIT"],
 "reports": ["1. View Security Report", "2. View Overview Report", "3. BACK","4. EXIT"]
 }
@@ -37,8 +37,8 @@ def create_menu(title):
 
     menu = menu_opptions.get(title)
     if menu:
-        for opption in menu:
-            print(opption)
+        for option in menu:
+            print(option)
     else:
         app_logger.error(f"No menu names {title}")
 
@@ -54,7 +54,7 @@ def create_menu(title):
             helper.clear_screen()
             create_menu("scans")
         else:
-            reports(menu_selection)
+            view_reports.reports(menu_selection, directory_name)
     
     if title.lower() == "update":
         if menu_selection == "1":
@@ -65,6 +65,8 @@ def create_menu(title):
             create_menu("reports")
         elif menu_selection == "3":
             update_project_data()
+        elif menu_selection == "4":
+            start_program()
     
     if title.lower() == "scans":
         if menu_selection in menu[-2]:
@@ -83,46 +85,23 @@ def update_project_data():
     helper.clear_screen()
     
 
-def scan(opption):
+def scan(option):
     global directory_name
 
     project_name = f"project_{directory_name.split("\\" or "/")[-1]}"
     reports_output = os.path.join("scr", "projects", f"{project_name}", "reports")
-    scans_output = os.path.join("scr", "projects", f"{project_name}", "scans")
 
-    if opption == "1":
+    if option == "1":
         scan_data = helper.read_file_content(f"scr/projects/{project_name}/scans/semgrep_ai_data.json")
         #scans.bandit(directory_name)
-        time.sleep(10)
+        time.sleep(5)
         ollama_test.start_ollama()
         ollama_test.security_scan_response(scan_data, reports_output)
 
-    elif opption == "2":
+    elif option == "2":
         project_data_path = os.path.join("scr", "projects", f"{project_name}", "scans", "project_data.json")
         project_data = helper.read_file_content(project_data_path)
-        time.sleep(10)
+        time.sleep(5)
         ollama_test.start_ollama()
         ollama_test.overview_scan_response(project_data, reports_output)
-
-
-def reports(opption):
-    project_name = f"project_{directory_name.split("\\" or "/")[-1]}"
-    
-    if opption == "1":
-        security_report = os.path.join("scr", "projects", f"{project_name}", "reports", "security_summary.txt")
-        security_print = helper.read_file_content(security_report)
-        print(security_print)
-
-        #TODO fix this if not '' then while True:
-        close = input("Press Enter key to close: ")
-        if close == "":
-            helper.clear_screen()
-            create_menu("reports")
-    if opption == "2":
-        overview_report = os.path.join("scr", "projects", f"{project_name}", "reports", "overview.txt")
-        overview_print = helper.read_file_content(overview_report)
-        print(f"{overview_print}\n\n")
-        close = input("Press Enter key to close: ")
-        if close == "":
-            helper.clear_screen()
-            create_menu("reports")
+ 
