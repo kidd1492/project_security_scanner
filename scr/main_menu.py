@@ -1,16 +1,13 @@
 from new_project import gather_poject_info
 from log_handler import app_logger
-import helper, new_project, view_reports
-import ollama_test
+import helper, new_project
+import ollama_test, test
 import sys, os, time
 
-'''TODO make a function to check scans and reports directory
-loop through and create a menu with those scans '''
 
 menu_opptions = {
 "update": ["1. Scans", "2. Reports", "3. Update Project Data", "4. Register New Project", "5. EXIT"],
 "scans": ["1. Run Security_scan", "2. Generate Overview Report", "3. MAIN MENU", "4. EXIT"],
-"reports": ["1. View Security Report", "2. View Overview Report", "3. BACK","4. EXIT"]
 }
 
 directory_name = ""
@@ -54,7 +51,7 @@ def create_menu(title):
             helper.clear_screen()
             create_menu("scans")
         else:
-            view_reports.reports(menu_selection, directory_name)
+            test.list_available_files(directory_name)
     
     if title.lower() == "update":
         if menu_selection == "1":
@@ -62,7 +59,7 @@ def create_menu(title):
             create_menu("scans")
         elif menu_selection == "2":
             helper.clear_screen()
-            create_menu("reports")
+            test.list_available_files(directory_name)
         elif menu_selection == "3":
             update_project_data()
         elif menu_selection == "4":
@@ -72,6 +69,7 @@ def create_menu(title):
         if menu_selection in menu[-2]:
             helper.clear_screen()
             create_menu("update")
+            #create_menu("update")
         else:
             helper.clear_screen()
             scan(menu_selection)

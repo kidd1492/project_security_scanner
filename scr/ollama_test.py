@@ -74,7 +74,7 @@ def security_scan_response(project_data, output):
         print("reports saved")
         stop_ollama()
         clear_screen()
-        main_menu.create_menu("reports")
+        main_menu.create_menu("update")
     except Exception as e:
         app_logger.error(f"An error occurred while getting the AI response: {e}")
         return ""
@@ -96,7 +96,7 @@ def overview_scan_response(project_data, output):
         print("reports saved")
         stop_ollama()
         clear_screen()
-        main_menu.create_menu("reports")
+        main_menu.create_menu("update")
     except Exception as e:
         app_logger.error(f"An error occurred while getting the AI response: {e}")
         return ""
