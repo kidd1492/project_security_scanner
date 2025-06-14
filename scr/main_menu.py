@@ -44,8 +44,6 @@ def create_menu(title):
     if menu_selection in menu[-1]:
         sys.exit()
 
-    '''TODO make own py file for each scans, reports, updats. import those files start functions.
-    send directory_name and the option'''
     if title == "reports":
         if menu_selection in menu[-2]:
             helper.clear_screen()
@@ -69,7 +67,6 @@ def create_menu(title):
         if menu_selection in menu[-2]:
             helper.clear_screen()
             create_menu("update")
-            #create_menu("update")
         else:
             helper.clear_screen()
             scan(menu_selection)

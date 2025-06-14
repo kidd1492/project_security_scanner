@@ -18,7 +18,7 @@ def check_log(directory):
     with open("scr/logs/project.log", "r", encoding="utf-8") as report:
         for line in report:
             if directory in line:
-                return True  # Return True if found
+                return True 
         
         project_logger.info(directory)  # Log only if not found in any line
         new_project(directory)
