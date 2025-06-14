@@ -1,7 +1,7 @@
 from new_project import gather_poject_info
 from log_handler import app_logger
 import helper, new_project
-import ollama_test, test
+import ollama_test, reports
 import sys, os, time
 
 
@@ -49,7 +49,7 @@ def create_menu(title):
             helper.clear_screen()
             create_menu("scans")
         else:
-            test.list_available_files(directory_name)
+            reports.list_available_files(directory_name)
     
     if title.lower() == "update":
         if menu_selection == "1":
@@ -57,7 +57,7 @@ def create_menu(title):
             create_menu("scans")
         elif menu_selection == "2":
             helper.clear_screen()
-            test.list_available_files(directory_name)
+            reports.list_available_files(directory_name)
         elif menu_selection == "3":
             update_project_data()
         elif menu_selection == "4":

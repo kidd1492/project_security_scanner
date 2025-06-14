@@ -1,5 +1,5 @@
 import os, sys
-import main, helper
+import main_menu, helper
 
 
 def list_available_files(directory_name):
@@ -42,7 +42,7 @@ def list_available_files(directory_name):
             sys.exit()
         elif selected_label == "MAIN MENU":
             helper.clear_screen()
-            main.create_menu("update")
+            main_menu.create_menu("update")
         else:
             helper.clear_screen()
             content = helper.read_file_content(selected_path)
