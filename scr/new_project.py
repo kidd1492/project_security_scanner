@@ -1,8 +1,8 @@
 import os
 from log_handler import app_logger, project_logger
-import helper
+import helper, scans
 from get_project_data import generate_project_json
-import main_menu, scans
+
 
 def get_directory():
     while True:
@@ -48,6 +48,4 @@ def gather_poject_info(directory, project_path):
     scans.run_semgrep_scan(directory, scans_dir)
 
     helper.parse_semgrep_scan(f"{scans_dir}/semgrep_results.json", scans_dir)
-    helper.clear_screen()
-    main_menu.create_menu("scans")
     

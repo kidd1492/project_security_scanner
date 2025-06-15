@@ -4,7 +4,7 @@ import main_menu, helper
 
 def list_available_files(directory_name):
     print("#" * 42)
-    print("reports")
+    print("Reports")
     print("#" * 42, "\n\n")
 
     project_name = f"project_{directory_name.split(os.sep)[-1]}"
@@ -42,16 +42,16 @@ def list_available_files(directory_name):
             sys.exit()
         elif selected_label == "MAIN MENU":
             helper.clear_screen()
-            main_menu.create_menu("update")
+            main_menu.create_menu("Main Menu")
         else:
             helper.clear_screen()
             content = helper.read_file_content(selected_path)
-            print(content)
-
-            close = input("Press Enter key to close: ")
-            if close == "":
-                helper.clear_screen()
-                list_available_files(directory_name)
+            print(content, "\n")
+            while True:
+                close = input("Press Enter key to close: ")
+                if close == "":
+                    helper.clear_screen()
+                    list_available_files(directory_name)
 
     except (ValueError, IndexError):
         print("\nInvalid selection. Please try again.\n")

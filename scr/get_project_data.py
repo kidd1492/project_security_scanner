@@ -1,5 +1,4 @@
-import os
-import json
+import os, json
 import helper
 from log_handler import app_logger, project_logger
 

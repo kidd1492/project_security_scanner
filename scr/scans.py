@@ -1,5 +1,4 @@
-import subprocess
-import os
+import subprocess, os
 from log_handler import app_logger, project_logger
 
 
@@ -13,7 +12,6 @@ def bandit(directory):
     return 0
    
 
-#TODO function for semgrep
 def run_semgrep_scan(directory, reports_dir):
     # Ensure the reports directory exist
     os.makedirs(reports_dir, exist_ok=True)

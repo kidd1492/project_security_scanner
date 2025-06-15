@@ -1,8 +1,6 @@
-import logging
 from log_handler import app_logger, project_logger
 from docutils.core import publish_doctree
-import os
-import json
+import os, json
 
 
 def read_file_content(file_path):

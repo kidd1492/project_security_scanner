@@ -1,4 +1,3 @@
-from new_project import gather_poject_info
 from log_handler import app_logger
 import helper, new_project
 import ollama_test, reports
@@ -6,8 +5,8 @@ import sys, os, time
 
 
 menu_opptions = {
-"update": ["1. Scans", "2. Reports", "3. Update Project Data", "4. Register New Project", "5. EXIT"],
-"scans": ["1. Run Security_scan", "2. Generate Overview Report", "3. MAIN MENU", "4. EXIT"],
+"Main Menu": ["1. AI Reports", "2. View Reports", "3. Update Project Data", "4. Register New Project", "5. EXIT"],
+"AI Reports": ["1. AI Security Evaluation", "2. AI Overview Report", "3. MAIN MENU", "4. EXIT"],
 }
 
 directory_name = ""
@@ -24,7 +23,10 @@ def start_program():
     exist = new_project.check_log(directory_name)
     if exist ==  True:
          helper.clear_screen()
-         create_menu("update")
+         create_menu("Main Menu")
+    else:
+        helper.clear_screen()
+        create_menu("AI Reports")
 
 
 def create_menu(title):
@@ -40,6 +42,8 @@ def create_menu(title):
         app_logger.error(f"No menu names {title}")
 
     print("\n")
+
+
     menu_selection = input("Enter Number for Opption: ")
     if menu_selection in menu[-1]:
         sys.exit()
@@ -51,10 +55,10 @@ def create_menu(title):
         else:
             reports.list_available_files(directory_name)
     
-    if title.lower() == "update":
+    if title.lower() == "main menu":
         if menu_selection == "1":
             helper.clear_screen()
-            create_menu("scans")
+            create_menu("AI Reports")
         elif menu_selection == "2":
             helper.clear_screen()
             reports.list_available_files(directory_name)
@@ -63,24 +67,26 @@ def create_menu(title):
         elif menu_selection == "4":
             start_program()
     
-    if title.lower() == "scans":
+    if title.lower() == "ai reports":
         if menu_selection in menu[-2]:
             helper.clear_screen()
-            create_menu("update")
+            create_menu("Main Menu")
         else:
             helper.clear_screen()
-            scan(menu_selection)
+            ai_report(menu_selection)
     
+
+
 
 def update_project_data():
     global directory_name
     project_id = directory_name.split("\\" or "/")[-1]
     project_path = os.path.join("scr", "projects", f"project_{project_id}")
-    gather_poject_info(directory_name, project_path)
+    new_project.gather_poject_info(directory_name, project_path)
     helper.clear_screen()
     
 
-def scan(option):
+def ai_report(option):
     global directory_name
 
     project_name = f"project_{directory_name.split("\\" or "/")[-1]}"
